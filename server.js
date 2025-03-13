@@ -28,6 +28,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// 📌 Funkcja do generowania unikalnego ID
+function generateUniqueId(newsArray) {
+    const maxId = Math.max(...newsArray.map(news => parseInt(news.id) || 0));
+    return (maxId + 1).toString(); // Zwróć ID o jeden większe od największego
+}
+
 // 📌 1️⃣ Pobieranie newsów z `news.json`
 app.get("/news", (req, res) => {
     fs.readFile("BB_website/news.json", "utf8", (err, data) => {
@@ -45,14 +51,24 @@ app.post("/add-news", upload.single("image"), (req, res) => {
         return res.status(400).json({ error: "Wszystkie pola są wymagane!" });
     }
 
-    fs.readFile("BB_Website/news.json", "utf8", (err, data) => {
+    fs.readFile("BB_website/news.json", "utf8", (err, data) => {
         if (err) return res.status(500).json({ error: "Błąd odczytu pliku JSON" });
 
         const newsArray = JSON.parse(data);
-        const newNews = { title, date, text, image: imagePath, tags: tags.split(",") };
 
-        newsArray.unshift(newNews);
-        fs.writeFile("BB_Website/news.json", JSON.stringify(newsArray, null, 2), (err) => {
+        // Sprawdzanie, czy news ma ID, jeśli nie to generujemy nowe
+        const newNews = {
+            id: generateUniqueId(newsArray),  // Generowanie unikalnego ID
+            title,
+            date,
+            text,
+            image: imagePath,
+            tags: tags.split(",")
+        };
+
+        newsArray.unshift(newNews); // Dodajemy nowy news na początek tablicy
+
+        fs.writeFile("BB_website/news.json", JSON.stringify(newsArray, null, 2), (err) => {
             if (err) return res.status(500).json({ error: "Błąd zapisu do pliku JSON" });
             res.json({ message: "Dodano news!", news: newNews });
         });
@@ -66,3 +82,21 @@ app.get("/admin", (req, res) => {
 
 // 📌 Start serwera
 app.listen(PORT, () => console.log(`✅ Serwer działa na http://localhost:${PORT}`));
+
+// 📌 Usuwanie newsa
+app.delete("/delete-news/:id", (req, res) => {
+    const { id } = req.params;
+
+    fs.readFile("BB_website/news.json", "utf8", (err, data) => {
+        if (err) return res.status(500).json({ error: "Błąd odczytu pliku JSON" });
+
+        const newsArray = JSON.parse(data);
+        const updatedNews = newsArray.filter(news => news.id !== id); // Filtrujemy newsy, usuwając ten, którego ID odpowiada
+
+        fs.writeFile("BB_website/news.json", JSON.stringify(updatedNews, null, 2), (err) => {
+            if (err) return res.status(500).json({ error: "Błąd zapisu do pliku JSON" });
+
+            res.json({ message: "News został usunięty." });
+        });
+    });
+});
