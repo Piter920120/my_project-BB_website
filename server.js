@@ -5,10 +5,10 @@ const multer = require("multer");
 const path = require("path");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;  // Możesz zmienić na 80, jeśli masz odpowiednie uprawnienia
 
-// 📌 Ustawienie "bbWebsite" jako folder publiczny
-app.use(express.static("BB_website"));
+// 📌 Ustawienie folderu "BB_website" jako folder publiczny
+app.use(express.static(path.join(__dirname, "BB_website")));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,10 +19,10 @@ app.use("/img", express.static(path.join(__dirname, "BB_website/img")));
 // 📌 Konfiguracja multer (przesyłanie plików)
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "BB_website/img/");
+        cb(null, "BB_website/img/"); // Folder na zdjęcia w BB_website/img
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));
+        cb(null, Date.now() + path.extname(file.originalname)); // Ustawienie nazwy pliku na unikalną
     }
 });
 
@@ -81,7 +81,9 @@ app.get("/admin", (req, res) => {
 });
 
 // 📌 Start serwera
-app.listen(PORT, () => console.log(`✅ Serwer działa na http://localhost:${PORT}`));
+app.listen(PORT, () => {
+    console.log(`✅ Serwer działa na http://localhost:${PORT}`);
+});
 
 // 📌 Usuwanie newsa
 app.delete("/delete-news/:id", (req, res) => {
