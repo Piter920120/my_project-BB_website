@@ -5,7 +5,7 @@ const multer = require("multer");
 const path = require("path");
 
 const app = express();
-const PORT = process.env.PORT || 3000;  // Możesz zmienić na 80, jeśli masz odpowiednie uprawnienia
+const PORT = 3000;  // Ustawienie portu na localhost:3000
 
 // 📌 Ustawienie folderu "BB_website" jako folder publiczny
 app.use(express.static(path.join(__dirname, "BB_website")));
@@ -30,7 +30,7 @@ const upload = multer({ storage: storage });
 
 // 📌 Funkcja do generowania unikalnego ID
 function generateUniqueId(newsArray) {
-    const maxId = Math.max(...newsArray.map(news => parseInt(news.id) || 0));
+    const maxId = Math.max(...newsArray.map(news => parseInt(news.id) || 0), 0);
     return (maxId + 1).toString(); // Zwróć ID o jeden większe od największego
 }
 
@@ -56,9 +56,8 @@ app.post("/add-news", upload.single("image"), (req, res) => {
 
         const newsArray = JSON.parse(data);
 
-        // Sprawdzanie, czy news ma ID, jeśli nie to generujemy nowe
         const newNews = {
-            id: generateUniqueId(newsArray),  // Generowanie unikalnego ID
+            id: generateUniqueId(newsArray),
             title,
             date,
             text,
@@ -66,7 +65,7 @@ app.post("/add-news", upload.single("image"), (req, res) => {
             tags: tags.split(",")
         };
 
-        newsArray.unshift(newNews); // Dodajemy nowy news na początek tablicy
+        newsArray.unshift(newNews);
 
         fs.writeFile("BB_website/news.json", JSON.stringify(newsArray, null, 2), (err) => {
             if (err) return res.status(500).json({ error: "Błąd zapisu do pliku JSON" });
@@ -80,11 +79,6 @@ app.get("/admin", (req, res) => {
     res.sendFile(path.join(__dirname, "BB_website", "admin.html"));
 });
 
-// 📌 Start serwera
-app.listen(PORT, () => {
-    console.log(`✅ Serwer działa na http://localhost:${PORT}`);
-});
-
 // 📌 Usuwanie newsa
 app.delete("/delete-news/:id", (req, res) => {
     const { id } = req.params;
@@ -93,12 +87,16 @@ app.delete("/delete-news/:id", (req, res) => {
         if (err) return res.status(500).json({ error: "Błąd odczytu pliku JSON" });
 
         const newsArray = JSON.parse(data);
-        const updatedNews = newsArray.filter(news => news.id !== id); // Filtrujemy newsy, usuwając ten, którego ID odpowiada
+        const updatedNews = newsArray.filter(news => news.id !== id);
 
         fs.writeFile("BB_website/news.json", JSON.stringify(updatedNews, null, 2), (err) => {
             if (err) return res.status(500).json({ error: "Błąd zapisu do pliku JSON" });
-
             res.json({ message: "News został usunięty." });
         });
     });
+});
+
+// 📌 Uruchomienie serwera na localhost:3000
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
