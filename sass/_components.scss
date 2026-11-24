@@ -1,0 +1,32 @@
+.wrapper {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.btn-special-animation{
+    position: relative;
+    transition: background-color .3s;
+    overflow: hidden;
+    z-index: 0; 
+    transition: width .3s;
+
+    &::before{
+        display: block;
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: scale(0);
+        transform-origin: right ;
+        transition:  transform .3s;
+        z-index: -1;
+
+    }
+    &:hover::before{
+        transform: scale(1);
+        transform-origin: left;
+    }
+}

@@ -1,0 +1,47 @@
+@mixin burgerBtn {
+    position: absolute;
+    right: 0;
+    height: 3px;
+    background-color: #fff;
+    transition: width .3s;
+}
+
+@mixin heroImages($bgImg){
+    background-image:$orange-gradient,url($bgImg);
+    background-size: cover;
+    background-position: center ;
+    background-attachment: fixed;
+}
+
+// @mixin heroImages($bgImg) {
+//     background-image: $orange-gradient, url($bgImg);
+//     background-size: cover, 80% auto;
+//     background-position: center, center calc(100% + 20px);
+//     background-attachment: fixed;
+//   }
+  
+
+@mixin shadow{
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7), 
+    0 0 20px rgba(0, 0, 0, 0.7);
+}
+
+@mixin burgerBtn{
+    position: absolute;
+    right: 0;
+    height: 3px;
+    background-color: $pure-white;
+}
+
+@mixin eventCardStyles {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+@mixin animationText{
+    opacity: 0;
+    transform: translateY(40px) scale(0.9);
+    animation: fadeInUpZoom 0.8s ease-out 0.4s forwards;
+}

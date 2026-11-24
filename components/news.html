@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090909">
+  <meta name="description" content="Najnowsze wiadomości, rolki i komunikaty Broken Ball w Iławie.">
+  <title>Aktualności i rolki | Broken Ball</title>
+  <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="news-reels.css">
+  <script defer src="news-reels.js"></script>
+</head>
+<body data-page="news">
+<a class="skip" href="#main">Przejdź do treści</a>
+<header class="topbar" id="topbar">
+  <a class="brand" href="../index.html" aria-label="Broken Ball, strona główna"><span>BB</span><strong>BROKEN BALL</strong></a>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span><b class="sr-only">Otwórz menu</b></button>
+  <nav id="nav" aria-label="Główna nawigacja"><a class="active" href="news.html">Aktualności</a><a href="../index.html#program">Program</a><a href="../index.html#strefy">Strefy</a><a href="history.html">Historia</a><a href="gallery.html">Galeria</a><a class="nav-cta" href="../index.html#zapisy">Zapisy</a></nav>
+</header>
+<main id="main">
+  <section class="page-hero"><div class="page-hero__content reveal"><p class="eyebrow"><span></span> NA ŚWIEŻO</p><h1>BROKEN<br><span>NEWS.</span></h1><p>Wiadomości, zapowiedzi i rolki z życia Broken Ball.</p></div><div class="page-hero__mark" aria-hidden="true">NEWS</div></section>
+  <section class="news-section" aria-labelledby="news-heading">
+    <div class="section-head reveal"><div><p class="kicker">BROKEN BALL</p><h2 id="news-heading">CO SIĘ DZIEJE?</h2></div><p class="result-count" id="result-count" aria-live="polite"></p></div>
+    <div class="news-toolbar reveal">
+      <label class="search-box"><span class="sr-only">Szukaj aktualności</span><input id="news-search" type="search" placeholder="Szukaj aktualności..." autocomplete="off"><span aria-hidden="true">⌕</span></label>
+      <div class="type-filters" aria-label="Rodzaj treści"><button type="button" class="active" data-type="all">Wszystkie</button><button type="button" data-type="article">Aktualności</button><button type="button" data-type="instagram">Rolki</button></div>
+      <div class="filters" id="filters" aria-label="Filtruj według tagu"><button type="button" class="active" data-filter="all">Wszystkie tagi</button></div>
+    </div>
+    <div id="featured-news" class="featured-news"></div>
+    <div id="news-grid" class="news-grid" aria-live="polite"><p class="status">Ładujemy aktualności…</p></div>
+    <button id="load-more" class="load-more" type="button" hidden>Pokaż więcej</button>
+  </section>
+</main>
+<dialog class="news-dialog" id="news-dialog" aria-labelledby="dialog-title"><button class="dialog-close" type="button" aria-label="Zamknij">×</button><div id="dialog-content"></div></dialog>
+<footer><a class="brand" href="../index.html"><span>BB</span><strong>BROKEN BALL</strong></a><div class="footer-links"><a href="https://www.facebook.com/brokenball" target="_blank" rel="noopener noreferrer">Facebook</a><a href="https://www.instagram.com/brokenball_official/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.youtube.com/@tomaszwozniak9581" target="_blank" rel="noopener noreferrer">YouTube</a></div><p>© <span id="year"></span> Broken Ball</p></footer>
+</body>
+</html>

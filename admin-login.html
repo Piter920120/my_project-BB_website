@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Broken Ball Admin</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#111;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.login-box{
+    width:350px;
+    padding:30px;
+    background:#1b1b1b;
+    border-radius:10px;
+}
+
+h1{
+    text-align:center;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-bottom:10px;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    cursor:pointer;
+    background:#ff5a1f;
+    color:white;
+    font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+<h1>Broken Ball Admin</h1>
+
+<form method="POST" action="/login">
+
+<input
+name="username"
+placeholder="Login"
+required>
+
+<input
+type="password"
+name="password"
+placeholder="Hasło"
+required>
+
+<button type="submit">
+Zaloguj
+</button>
+
+</form>
+
+</div>
+
+</body>
+</html>
