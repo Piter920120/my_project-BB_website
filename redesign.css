@@ -41,3 +41,25 @@
 }
 
 
+#seconds{
+    animation:secondsPulse 1s infinite;
+}
+
+@keyframes secondsPulse{
+
+    0%{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+    50%{
+        opacity:.65;
+        transform:translateY(2px);
+    }
+
+    100%{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
